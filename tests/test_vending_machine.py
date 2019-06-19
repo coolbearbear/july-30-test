@@ -1,5 +1,5 @@
 import pytest
-
+import products
 import coins
 from vending_machine import VendingMachine
 
@@ -24,8 +24,22 @@ def test_inserted_coins_are_appended_to_coin_list():
     machine.insert_coin(coins.Toonie())
     machine.insert_coin(coins.Quarter())
 
-    assert machine.coins == [
+    assert machine.inserted_coins == [
     coins.Loonie(),
     coins.Toonie(),
     coins.Quarter()
     ]
+
+def test_buy_product_rejects_strings():
+    machine = VendingMachine()
+
+    with pytest.raises(ValueError):
+        machine.buy_product(str)
+
+def test_buy_chips():
+    machine = VendingMachine()
+    machine.buy_product(products.Chips)
+
+def test_buy_drink():
+    machine = VendingMachine()
+    machine.buy_product(products.Drink)
